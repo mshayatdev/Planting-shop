@@ -1,2 +1,2 @@
 # garden-website
-My first garden website 🌿
+My first project planting shop 🌿
