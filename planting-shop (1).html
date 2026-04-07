@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planting Shop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #2d6a4f;
+      --green-light: #52b788;
+      --orange: #f4a261;
+      --pink: #e76f51;
+      --bg-light: #f8f9f4;
+      --text-dark: #1a1a1a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-dark);
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 14px 0;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-icon i {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .navbar-nav .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      padding: 6px 16px;
+    }
+
+    .navbar-nav .nav-link.active {
+      color: var(--orange);
+      border-bottom: 2px solid var(--orange);
+    }
+
+    .btn-order {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      transition: background .25s;
+    }
+
+    .btn-order:hover {
+      background: #1b4332;
+      color: #fff;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 520px;
+      background: var(--bg-light);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-leaf-1 {
+      position: absolute;
+      top: 60px;
+      right: 420px;
+      font-size: 28px;
+      color: var(--green-light);
+      opacity: .6;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-10deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(5deg);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      color: #777;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 380px;
+    }
+
+    .btn-outline-shop {
+      border: 2px solid var(--orange);
+      color: var(--orange);
+      background: transparent;
+      border-radius: 30px;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      transition: all .25s;
+    }
+
+    .btn-outline-shop:hover {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .btn-quick-shop {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      transition: background .25s;
+    }
+
+    .btn-quick-shop:hover {
+      background: #1b4332;
+    }
+
+    /* < !-- Right single hero image --> */
+    .hero-img-wrap {
+      position: relative;
+      background: #fff;
+      border: 2px solid var(--green-light);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .10);
+      display: inline-block;
+    }
+
+    .hero-main-img {
+      width: 380px;
+      height: 420px;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (max-width: 991px) {
+      .hero-main-img {
+        width: 280px;
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-main-img {
+        width: 220px;
+        height: 260px;
+      }
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: #1a1a1a;
+      overflow: hidden;
+      padding: 14px 0;
+    }
+
+    /* ── CATEGORIES ── */
+    .section-categories {
+      padding: 80px 0;
+    }
+
+    .category-img-block {
+      border-radius: 18px;
+      overflow: hidden;
+      height: 320px;
+      background: #e9f5ee;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .category-img-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cat-card {
+      border-radius: 16px;
+      padding: 28px 24px;
+      height: 145px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .cat-card .cat-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .cat-card h6 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .cat-card p {
+      font-size: 12px;
+      color: #666;
+      margin: 0;
+    }
+
+    .bg-cat-1 {
+      background: #e8f5e9;
+    }
+
+    .bg-cat-2 {
+      background: #fff3e8;
+    }
+
+    .bg-cat-3 {
+      background: #fce4ec;
+    }
+
+    .bg-cat-4 {
+      background: #e3f2fd;
+    }
+
+    /* ── BEST PLANTS SECTION ── */
+    .section-best {
+      padding: 80px 0;
+      background: var(--bg-light);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      max-width: 560px;
+      margin: 0 auto 50px;
+      line-height: 1.7;
+    }
+
+    .plant-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+      transition: transform .25s, box-shadow .25s;
+      position: relative;
+    }
+
+    .plant-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .12);
+    }
+
+    .plant-card .badge-discount {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 30px;
+      padding: 3px 10px;
+    }
+
+    .plant-card .badge-heart {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #fff;
+      color: var(--pink);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .plant-card .card-img-wrap {
+      height: 180px;
+      background: #f0f7f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .plant-card .card-img-wrap img {
+      max-height: 150px;
+      object-fit: contain;
+    }
+
+    .plant-card .card-body {
+      padding: 16px;
+    }
+
+    .plant-card .card-body h6 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      margin-bottom: 6px;
+    }
+
+    .plant-card .price-new {
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .plant-card .price-old {
+      color: #aaa;
+      font-size: 13px;
+      text-decoration: line-through;
+      margin-left: 6px;
+    }
+
+    .btn-quick-order {
+      display: block;
+      width: 100%;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 14px;
+      transition: background .25s;
+    }
+
+    .btn-quick-order:hover {
+      background: #1b4332;
+    }
+
+    .btn-quick-order-dark {
+      background: #1a1a1a;
+    }
+
+    .btn-quick-order-dark:hover {
+      background: #333;
+    }
+
+    /* ── FAQ ── */
+    .section-faq {
+      padding: 80px 0;
+    }
+
+    .faq-leaf {
+      position: absolute;
+      right: -20px;
+      top: -30px;
+      font-size: 48px;
+      color: var(--green-light);
+      opacity: .4;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .accordion-button {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      background: transparent !important;
+      color: var(--text-dark) !important;
+      box-shadow: none !important;
+      padding: 18px 20px;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: var(--green) !important;
+      color: #fff !important;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .accordion-button::after {
+      background-image: none !important;
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      content: "\f067";
+      color: var(--green);
+      font-size: 13px;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+      content: "\f00d";
+      color: #fff;
+    }
+
+    .accordion-item {
+      border: 1px solid #eee !important;
+      border-radius: 10px !important;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-body {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.8;
+      border-top: none;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #1a1a1a;
+      color: #aaa;
+      padding: 60px 0 30px;
+    }
+
+    .footer h5 {
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .footer a {
+      color: #888;
+      text-decoration: none;
+      font-size: 13px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .footer a:hover {
+      color: var(--green-light);
+    }
+
+    .footer-divider {
+      border-color: #333;
+      margin: 30px 0;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <div class="brand-icon"><i class="fas fa-seedling"></i></div>
+        Planting Shop
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-1">
+          <li class="nav-item"><a class="nav-link active" href="#">Our Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Plants Delivery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+        </ul>
+        <button class="btn btn-order">Order Now</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <!-- Left text -->
+        <div class="col-lg-6">
+          <h1>Bringing nature home<br>explore our collection</h1>
+          <p>Lorem ipsum publishing software accident sometimes operative purpose passage volunteer accusation
+            dolormiliters laudanums consequent occasionally rationally encounter circumstance pursue pleasure because
+            occasionally end.</p>
+          <div class="d-flex gap-3 mt-4 flex-wrap">
+            <button class="btn btn-outline-shop">Our Newest Plants</button>
+            <button class="btn btn-quick-shop">Quick Shop Now</button>
+          </div>
+        </div>
+        <!-- Right single hero image -->
+        <div class="col-lg-6 d-flex justify-content-center justify-content-lg-end">
+          <div class="hero-img-wrap">
+            <img src="images/ruffled-leaf-plant-pot.jpg" alt="Featured Plant" class="hero-main-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ── CATEGORIES ── -->
+  <section class="section-categories">
+    <div class="container">
+      <div class="row g-4 align-items-stretch">
+        <!-- Big image left -->
+        <div class="col-lg-4">
+          <div class="category-img-block"
+            style="background:#e9f5ee; border-radius:18px; overflow:hidden; height:360px;">
+            <img src="images/category-featured.jpg" alt="Featured Plant" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+        </div>
+        <!-- 4 category cards -->
+        <div class="col-lg-8">
+          <div class="row g-3 h-100">
+            <div class="col-6">
+              <div class="cat-card bg-cat-1 h-100">
+                <div class="cat-icon" style="background: var(--green);">
+                  <i class="fas fa-seedling" style="color:#fff; font-size:18px;"></i>
+                </div>
+                <h6>Ficus Bonsai Plants</h6>
+                <p>Lorem ipsum publishing software accidentsw sometimes operative purpose passage end.</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="cat-card bg-cat-2 h-100">
+                <div class="cat-icon" style="background: var(--orange);">
+                  <i class="fas fa-leaf" style="color:#fff; font-size:18px;"></i>
+                </div>
+                <h6>Bamboo Palm Plants</h6>
+                <p>Lorem ipsum publishing software accidentsw sometimes operative purpose passage end.</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="cat-card bg-cat-3 h-100">
+                <div class="cat-icon" style="background: #e91e63;">
+                  <i class="fas fa-spa" style="color:#fff; font-size:18px;"></i>
+                </div>
+                <h6>Banyan Tree Bonsai</h6>
+                <p>Lorem ipsum publishing software accidentsw sometimes operative purpose passage end.</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="cat-card bg-cat-4 h-100">
+                <div class="cat-icon" style="background: #1976d2;">
+                  <i class="fas fa-tree" style="color:#fff; font-size:18px;"></i>
+                </div>
+                <h6>Boxwood Bonsai Plants</h6>
+                <p>Lorem ipsum publishing software accidentsw sometimes operative purpose passage end.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BEST PLANTS ── -->
+  <section class="section-best">
+    <div class="container">
+      <h2 class="section-title">Choose our best plants &amp; trees</h2>
+      <p class="section-sub">Lorem ipsum publishing software accident sometimes operative purpose passage volunteer
+        accusation dolormiliters laudanums consequent occasionally rationally encounter consequence circumstances.</p>
+
+      <div class="row g-4">
+        <!-- Card 1 - large with order button -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <span class="badge-discount">90%</span>
+            <span class="badge-heart"><i class="fas fa-heart"></i></span>
+            <div class="card-img-wrap" style="background:#fff3e8;">
+              <img src="images/plant-monstera.jpg" alt="Monstera Deliciosa Plant">
+            </div>
+            <div class="card-body">
+              <h6>Monstera Deliciosa Plant</h6>
+              <div>
+                <span class="price-new">$260.00</span>
+                <span class="price-old">$280.00</span>
+              </div>
+              <button class="btn-quick-order">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 - tall right side -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <div class="card-img-wrap" style="background:#f0f7f0;">
+              <img src="images/plant-born-champions.jpg" alt="Born Champions Plant">
+            </div>
+            <div class="card-body">
+              <h6>Born Champions Plant</h6>
+              <div>
+                <span class="price-new">$290.00</span>
+                <span class="price-old">$260.00</span>
+              </div>
+              <button class="btn-quick-order">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <span class="badge-discount">40%</span>
+            <span class="badge-heart"><i class="fas fa-heart"></i></span>
+            <div class="card-img-wrap" style="background:#e8f5e9;">
+              <img src="images/plant-anthurium.jpg" alt="Anthurium Blue Plant">
+            </div>
+            <div class="card-body">
+              <h6>Anthurium Blue Plant</h6>
+              <div>
+                <span class="price-new">$300.00</span>
+                <span class="price-old">$320.00</span>
+              </div>
+              <button class="btn-quick-order btn-quick-order-dark">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <div class="card-img-wrap" style="background:#f3e5f5;">
+              <img src="images/plant-hedgehog-aloe.jpg" alt="Hedgehog Aloe Plant">
+            </div>
+            <div class="card-body">
+              <h6>Hedgehog Aloe Plant</h6>
+              <div>
+                <span class="price-new">$270.00</span>
+                <span class="price-old">$290.00</span>
+              </div>
+              <button class="btn-quick-order">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <div class="card-img-wrap" style="background:#e3f2fd;">
+              <img src="images/plant-silver-pothos.jpg" alt="Silver Pothos Plant">
+            </div>
+            <div class="card-body">
+              <h6>Silver Pothos Plant</h6>
+              <div>
+                <span class="price-new">$200.00</span>
+                <span class="price-old">$230.00</span>
+              </div>
+              <button class="btn-quick-order">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <span class="badge-discount">25%</span>
+            <div class="card-img-wrap" style="background:#fff9c4;">
+              <img src="images/plant-golden-cactus.jpg" alt="Golden Cactus Bloom">
+            </div>
+            <div class="card-body">
+              <h6>Golden Cactus Bloom</h6>
+              <div>
+                <span class="price-new">$180.00</span>
+                <span class="price-old">$240.00</span>
+              </div>
+              <button class="btn-quick-order">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 7 -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <div class="card-img-wrap" style="background:#f1f8e9;">
+              <img src="images/plant-bamboo-zen.jpg" alt="Bamboo Zen Plant">
+            </div>
+            <div class="card-body">
+              <h6>Bamboo Zen Plant</h6>
+              <div>
+                <span class="price-new">$220.00</span>
+                <span class="price-old">$250.00</span>
+              </div>
+              <button class="btn-quick-order">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 8 -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="plant-card h-100">
+            <span class="badge-discount">15%</span>
+            <span class="badge-heart"><i class="fas fa-heart"></i></span>
+            <div class="card-img-wrap" style="background:#fce4ec;">
+              <img src="images/plant-cherry-blossom.jpg" alt="Cherry Blossom Tree">
+            </div>
+            <div class="card-body">
+              <h6>Cherry Blossom Tree</h6>
+              <div>
+                <span class="price-new">$340.00</span>
+                <span class="price-old">$400.00</span>
+              </div>
+              <button class="btn-quick-order btn-quick-order-dark">Quick Order Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="section-faq">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 position-relative">
+          <div class="faq-leaf"
+            style="position:absolute; right:-30px; top:-40px; opacity:.3; animation:float 5s ease-in-out infinite;"><img
+              src="images/leaf-deco.png" alt="" style="width:48px;"></div>
+          <h2 class="section-title">Frequently asked questions</h2>
+          <p class="section-sub">Lorem ipsum publishing software accident sometimes operative purpose passage volunteer
+            accusation dolormiliters laudanums consequent occasionally rationally encounter circumstance.</p>
+
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#faq1">
+                  What should I do if I receive a damaged or wrong product?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Lorem ipsum publishing software accident sometimes operative purpose passage
+                  volunteer accusation dolormiliters laudanums consequent occasionally rationally encounter consequence
+                  circumstances pursue pleasure because occasionally end.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  When the order payment is taken of my bank account?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Lorem ipsum publishing software accident sometimes operative purpose passage
+                  sometimes operative volunteer accusation dolormiliters laudanums consequent occasionally rationally
+                  encounter consequence circumstances pursue pleasure because occasionally end. Lorem ipsum publishing
+                  software accident sometimes operative purpose passage volunteer accusation dolormiliters laudanums
+                  consequent occasionally.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#faq3">
+                  Delivery charges for orders from the online shop?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Free delivery is available for orders above $150. Standard delivery charges
+                  apply for smaller orders depending on your location.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#faq4">
+                  How large of a hole should I dig for my tree?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Dig a hole that is two to three times wider than the root ball and just as
+                  deep. This gives roots room to expand and helps the plant establish quickly.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#faq5">
+                  When will I receive the invoice for my order?
+                </button>
+              </h2>
+              <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">An invoice is automatically emailed to you right after order confirmation.
+                  You can also download it from your account dashboard anytime.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="brand-icon"><i class="fas fa-seedling"></i></div>
+            <span
+              style="color:#fff; font-weight:700; font-size:15px; letter-spacing:1px; text-transform:uppercase;">Planting
+              Shop</span>
+          </div>
+          <p style="font-size:13px; color:#666; line-height:1.8;">Bringing the beauty of nature into your home. Premium
+            quality plants delivered with care to your doorstep.</p>
+          <div class="d-flex gap-3 mt-4">
+            <a href="#" style="color:#555; font-size:18px; text-decoration:none;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" style="color:#555; font-size:18px; text-decoration:none;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="color:#555; font-size:18px; text-decoration:none;"><i class="fab fa-twitter"></i></a>
+            <a href="#" style="color:#555; font-size:18px; text-decoration:none;"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5>Quick Links</h5>
+          <a href="#">Our Products</a>
+          <a href="#">Accessories</a>
+          <a href="#">Plants Delivery</a>
+          <a href="#">Contact Us</a>
+          <a href="#">About Us</a>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5>Categories</h5>
+          <a href="#">Bonsai Plants</a>
+          <a href="#">Bamboo Palm</a>
+          <a href="#">Cactus & Succulents</a>
+          <a href="#">Indoor Trees</a>
+          <a href="#">Outdoor Plants</a>
+        </div>
+        <div class="col-lg-4">
+          <h5>Newsletter</h5>
+          <p style="font-size:13px; color:#666; line-height:1.8; margin-bottom:16px;">Subscribe for plant care tips and
+            exclusive offers.</p>
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Your email address"
+              style="background:#2a2a2a; border-color:#333; color:#fff; font-size:13px; border-radius:8px 0 0 8px;">
+            <button class="btn btn-order" style="border-radius:0 8px 8px 0;">Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <p class="footer-copy">© 2024 Planting Shop. All rights reserved. Designed by Hayat</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
